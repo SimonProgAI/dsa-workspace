@@ -1,0 +1,13 @@
+{
+  "problem": "problem-name",
+  "signature": "solve(argument: type, other: type) -> type",
+  "notes": "How to read a case: what each element of `input` is, how a non-primitive argument is encoded (an array of node values for a linked list, an index-addressed level-order array for a tree, an adjacency list for a graph), and any behaviour deliberately left untested.",
+  "cases": [
+    { "name": "typical input", "input": [[1, 2, 3], 4], "expected": 7 },
+    { "name": "another shape of input", "input": [[5], 1], "expected": 6 }
+  ],
+  "edgeCases": [
+    { "name": "empty input", "input": [[], 0], "expected": 0 },
+    { "name": "single element", "input": [[1], 0], "expected": 1 }
+  ]
+}

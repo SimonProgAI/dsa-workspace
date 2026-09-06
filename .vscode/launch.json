@@ -1,0 +1,110 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C++: Debug Active File",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${fileDirname}/${fileBasenameNoExtension}.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${fileDirname}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "preLaunchTask": "Build C++ Active File",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    },
+    {
+      "name": "Python: Debug Active File",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "cwd": "${fileDirname}",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/harness/python"
+      },
+      "justMyCode": true
+    },
+    {
+      "name": "Java: Debug Active File",
+      "type": "java",
+      "request": "launch",
+      "mainClass": "${file}",
+      "cwd": "${fileDirname}",
+      "classPaths": [
+        "${workspaceFolder}/harness/java/out"
+      ],
+      "preLaunchTask": "Build Java Test Harness",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "TypeScript: Debug Active File",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "tsx"
+      ],
+      "args": [
+        "${file}"
+      ],
+      "cwd": "${fileDirname}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": [
+        "<node_internals>/**",
+        "**/node_modules/**"
+      ]
+    },
+    {
+      "name": "Vitest: Debug Active Test File",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "vitest",
+        "run",
+        "--no-file-parallelism"
+      ],
+      "args": [
+        "${fileBasenameNoExtension}"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "autoAttachChildProcesses": true,
+      "skipFiles": [
+        "<node_internals>/**",
+        "**/node_modules/**"
+      ]
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": true,
+      "cwd": "c:/Workspace/dsa-workspace/templates",
+      "program": "c:/Workspace/dsa-workspace/templates/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+# Compiled output, kept next to the sources by the run/build tasks
+*.exe
+*.class
+*.o
+harness/java/out/
+harness/java/dsa-harness.jar
+
+# Node / Vitest
+node_modules/
+
+# Python
+__pycache__/
+.pytest_cache/
+*.pyc
+
+# Machine-local Claude Code permissions (absolute paths, not shareable)
+.claude/settings.local.json

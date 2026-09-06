@@ -1,0 +1,17 @@
+{
+  "problem": "reverse-linked-list",
+  "signature": "reverseList(head: ListNode) -> ListNode",
+  "notes": "The list is given as a plain array of node values, and the expected result is the reversed array. Build a list from input[0], reverse it, then flatten the result back to an array before comparing.",
+  "cases": [
+    { "name": "four nodes", "input": [[1, 2, 3, 4]], "expected": [4, 3, 2, 1] },
+    { "name": "two nodes", "input": [[1, 2]], "expected": [2, 1] },
+    { "name": "already palindromic", "input": [[1, 2, 1]], "expected": [1, 2, 1] },
+    { "name": "negative values", "input": [[-1, -2, -3]], "expected": [-3, -2, -1] }
+  ],
+  "edgeCases": [
+    { "name": "empty list", "input": [[]], "expected": [] },
+    { "name": "single node", "input": [[7]], "expected": [7] },
+    { "name": "duplicate values", "input": [[1, 1, 2]], "expected": [2, 1, 1] },
+    { "name": "long list", "input": [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]], "expected": [10, 9, 8, 7, 6, 5, 4, 3, 2, 1] }
+  ]
+}

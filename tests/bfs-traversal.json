@@ -1,0 +1,19 @@
+{
+  "problem": "bfs-traversal",
+  "signature": "bfs(graph: int[][], start: int) -> int[]",
+  "notes": "The graph is an adjacency list indexed by node id: graph[i] holds the neighbours of node i, so node ids are 0..n-1. Each input is [graph, start]. Neighbours are visited in the order they appear, and only nodes reachable from start are returned.",
+  "cases": [
+    { "name": "square graph from 0", "input": [[[1, 2], [0, 3], [0, 3], [1, 2]], 0], "expected": [0, 1, 2, 3] },
+    { "name": "square graph from 3", "input": [[[1, 2], [0, 3], [0, 3], [1, 2]], 3], "expected": [3, 1, 2, 0] },
+    { "name": "path graph", "input": [[[1], [0, 2], [1, 3], [2]], 0], "expected": [0, 1, 2, 3] },
+    { "name": "star graph from the centre", "input": [[[1, 2, 3], [0], [0], [0]], 0], "expected": [0, 1, 2, 3] },
+    { "name": "star graph from a leaf", "input": [[[1, 2, 3], [0], [0], [0]], 2], "expected": [2, 0, 1, 3] }
+  ],
+  "edgeCases": [
+    { "name": "single node, no edges", "input": [[[]], 0], "expected": [0] },
+    { "name": "disconnected component is not reached", "input": [[[1], [0], [3], [2]], 0], "expected": [0, 1] },
+    { "name": "self loop is visited once", "input": [[[0, 1], [0]], 0], "expected": [0, 1] },
+    { "name": "cycle revisits nothing", "input": [[[1], [2], [0]], 1], "expected": [1, 2, 0] },
+    { "name": "breadth before depth", "input": [[[1, 2], [3], [4], [], []], 0], "expected": [0, 1, 2, 3, 4] }
+  ]
+}

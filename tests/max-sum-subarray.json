@@ -1,0 +1,19 @@
+{
+  "problem": "max-sum-subarray",
+  "signature": "maxSumSubarray(nums: int[], k: int) -> int",
+  "notes": "Largest sum of any contiguous window of exactly k elements. Each input is [nums, k]. Every case has 1 <= k <= nums.length, so behaviour for k > nums.length is left undefined.",
+  "cases": [
+    { "name": "window in the middle", "input": [[2, 1, 5, 1, 3, 2], 3], "expected": 9 },
+    { "name": "k = 1 picks the maximum", "input": [[1, 2, 3, 4, 5], 1], "expected": 5 },
+    { "name": "k = length is the whole array", "input": [[1, 2, 3, 4, 5], 5], "expected": 15 },
+    { "name": "best window is first", "input": [[9, 9, 1, 1, 1], 2], "expected": 18 },
+    { "name": "best window is last", "input": [[1, 1, 1, 9, 9], 2], "expected": 18 }
+  ],
+  "edgeCases": [
+    { "name": "single element", "input": [[7], 1], "expected": 7 },
+    { "name": "all negative", "input": [[-1, -2, -3, -4], 2], "expected": -3 },
+    { "name": "mixed signs, tie between windows", "input": [[5, -3, 5], 2], "expected": 2 },
+    { "name": "zeros", "input": [[0, 0, 0], 2], "expected": 0 },
+    { "name": "negative then positive", "input": [[-10, 1, 1, 1], 3], "expected": 3 }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "dsa-workspace",
+  "private": true,
+  "type": "module",
+  "description": "Tooling for the TypeScript side of the DSA workspace: tsx to run a file, Vitest to test one.",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "tsx": "^4.23.13",
+    "vitest": "^5.0.0"
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build C++ Active File",
+      "type": "shell",
+      "command": "g++",
+      "args": [
+        "-g",
+        "-std=c++17",
+        "-I${workspaceFolder}/harness/cpp",
+        "${file}",
+        "-o",
+        "${fileDirname}/${fileBasenameNoExtension}.exe"
+      ],
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "group": "build",
+      "problemMatcher": ["$gcc"],
+      "detail": "Compiles the currently open .cpp file with g++, next to the source file. harness/cpp is on the include path, so #include \"test.hpp\" works."
+    },
+    {
+      "label": "Run C++ Active File",
+      "type": "shell",
+      "command": "${fileDirname}/${fileBasenameNoExtension}.exe",
+      "dependsOn": ["Build C++ Active File"],
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "group": "test",
+      "problemMatcher": [],
+      "detail": "Builds then runs the currently open .cpp file."
+    },
+    {
+      "label": "Run Python Active File",
+      "type": "shell",
+      "command": "python",
+      "args": ["${file}"],
+      "options": {
+        "cwd": "${fileDirname}",
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}/harness/python"
+        }
+      },
+      "group": "test",
+      "problemMatcher": [],
+      "detail": "Runs the currently open .py file, with harness/python importable (from dsatest import ...)."
+    },
+    {
+      "label": "Run Java Active File",
+      "type": "shell",
+      "command": "java",
+      "args": ["-cp", "${workspaceFolder}/harness/java/out", "${file}"],
+      "dependsOn": ["Build Java Test Harness"],
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "group": "test",
+      "problemMatcher": [],
+      "detail": "Runs the currently open .java file using Java's single-file source-code launcher (JDK 11+), with the test harness on the classpath."
+    },
+    {
+      "label": "Build Java Test Harness",
+      "type": "shell",
+      "command": "javac",
+      "args": ["-d", "out", "dsa/Json.java", "dsa/TestRunner.java"],
+      "options": {
+        "cwd": "${workspaceFolder}/harness/java"
+      },
+      "group": "build",
+      "problemMatcher": ["$javac"],
+      "detail": "Compiles the Java test harness to harness/java/out, which the Java run and debug configs put on the classpath."
+    },
+    {
+      "label": "Package Java Test Harness (jar, for the editor)",
+      "type": "shell",
+      "command": "jar",
+      "args": ["--create", "--file", "dsa-harness.jar", "-C", "out", "."],
+      "dependsOn": ["Build Java Test Harness"],
+      "options": {
+        "cwd": "${workspaceFolder}/harness/java"
+      },
+      "problemMatcher": [],
+      "detail": "Builds the jar the Java language server needs to resolve `import dsa.TestRunner` (it ignores plain class folders). Only affects the editor -- running and debugging use harness/java/out. Requires the JDK's bin on PATH; `jar` is often missing when only java/javac are shimmed, in which case add e.g. C:\\Program Files\\Java\\jdk-25\\bin to PATH. Re-run it after changing the harness. Nothing else depends on this task, so a missing `jar` can never break running."
+    },
+    {
+      "label": "Run TypeScript Active File",
+      "type": "shell",
+      "command": "npx",
+      "args": ["tsx", "${file}"],
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "group": "test",
+      "problemMatcher": [],
+      "detail": "Runs the currently open .ts file with tsx (no build step, no tsconfig needed)."
+    },
+    {
+      "label": "Test TypeScript Active File",
+      "type": "shell",
+      "command": "npx",
+      "args": ["vitest", "run", "${fileBasenameNoExtension}"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": "test",
+      "problemMatcher": [],
+      "detail": "Runs the Vitest files whose path matches the open file's name. Needs npm install first."
+    },
+    {
+      "label": "Test TypeScript (All)",
+      "type": "shell",
+      "command": "npx",
+      "args": ["vitest", "run"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": "test",
+      "problemMatcher": [],
+      "detail": "Runs every *.test.ts file in the workspace. Needs npm install first."
+    }
+  ]
+}
