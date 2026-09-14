@@ -8,6 +8,9 @@ harness/java/dsa-harness.jar
 # Node / Vitest
 node_modules/
 
+# Scratch file the Code Runner extension writes when running a selection
+tempCodeRunnerFile.*
+
 # Python
 __pycache__/
 .pytest_cache/

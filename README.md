@@ -9,8 +9,6 @@ AI (Claude) was used to bootstrap this workspace — specifically to:
 - create the folder structure and category layout,
 - set up the VS Code run/debug configuration (`.vscode/launch.json`, `.vscode/tasks.json`, `.vscode/settings.json`),
 - write the test harnesses in `harness/` and the templates in `templates/`,
-- generate the initial placeholder/example files that verify each toolchain works,
-- generate the starter test cases in `tests/` and the sample `problem-overview.md` files,
 - write this README.
 
 **The solutions themselves are not AI-generated.** Every problem solution committed to this repository from here on is implemented by me, 100% human-written. The AI-generated scaffolding exists only so that solving problems requires zero setup — it does not solve them.
@@ -21,7 +19,7 @@ AI (Claude) was used to bootstrap this workspace — specifically to:
 
 Solve problems in whichever languages you feel like, without setting up a build system per problem. Every file is standalone: open it, hit run or debug, done.
 
-A problem folder can hold one language or several — solving the same problem side by side in multiple languages is the point when you want the comparison, not an obligation every time. The four languages above are the ones with run/debug configs today; nothing stops you from adding another (see [Adding a New Language](#adding-a-new-language)).
+The four languages above are the ones with run/debug configs today; nothing stops you from adding another (see [Adding a New Language](#adding-a-new-language)).
 
 ## Folder Structure
 
@@ -39,52 +37,16 @@ dsa-workspace/
     java/dsa/Json.java        # minimal JSON reader used by TestRunner
     ts/dsatest.ts       #   loadCases for Vitest, plus a standalone tsx runner
   tests/                # shared test cases, one JSON file per problem
-    two-sum-sorted.json
-    binary-search.json
-    ...
+    <problem>.json
   templates/            # copy these when starting a new problem
     problem-overview.md
     tests.json
     solution.{cpp,py,java,ts}
     solution.test.ts
-  two-pointers/
-    two-sum-sorted/
-      problem-overview.md    # what the problem is, and how you thought about it
-      two-sum-sorted.cpp
-      two-sum-sorted.py
-      two-sum-sorted.java
-      two-sum-sorted.ts
-      two-sum-sorted.test.ts # optional: the Vitest file for the TypeScript solution
-  sliding-window/
-    max-sum-subarray/
-      ...
-  linked-list/
-    reverse-linked-list/
-      ...
-  binary-search/
-    binary-search/
-      ...
-  dynamic-programming/
-    fibonacci/
-      ...
-  graphs/
-    bfs-traversal/
-      ...
-  trees/
-    binary-tree-inorder/
-      ...
-  recursion/
-    factorial/
-      ...
-  sorting/
-    merge-sort/
-      ...
-  greedy/
-    activity-selection/
-      ...
-  math/
-    gcd/
-      ...
+  <category>/           # one folder per category, created as problems get solved
+    <problem>/
+      problem-overview.md    # what the problem is, and how I thought about it
+      <problem>.ts           # one file per language the problem was solved in
   sandbox/              # experiments, benchmarks, anything that isn't a DSA problem
     README.md
   conftest.py           # lets pytest find the Python harness with no setup
@@ -92,7 +54,11 @@ dsa-workspace/
   vitest.config.ts
 ```
 
-Each category folder holds one problem folder per problem. A problem folder holds one file per language you solved it in — as few as one, as many as you like — all sharing the problem's name. The four-file example above is just what a fully cross-implemented problem looks like.
+Category folders are created at the workspace root as problems in those categories get solved — `sliding-window/`, `graphs/`, `trees/`, and so on, each holding one problem folder per problem.
+
+A problem folder holds one file per language the problem was solved in — as few as one, as many as you like — all sharing the problem's name, plus the `problem-overview.md` and an optional `<problem>.test.ts` for Vitest. Solving the same problem in several languages side by side is the point when the comparison is interesting, not an obligation every time.
+
+A problem folder may also hold a `use-case/` subfolder: the same algorithm applied to a realistic scenario, to show where the technique actually earns its keep. Files there are named after the scenario rather than the problem, since the parent folder already names the problem.
 
 `sandbox/` sits outside that scheme entirely; see [Sandbox](#sandbox).
 
@@ -110,10 +76,10 @@ Steps 3 and 4 are optional in the sense that nothing breaks without them; a solu
 
 ## Naming Conventions
 
-- **Folders & files:** kebab-case, matching the problem name exactly (`reverse-linked-list/reverse-linked-list.py`).
+- **Folders & files:** kebab-case, matching the problem name exactly (`remove-occurrences-of-element/remove-occurrences-of-element.py`).
 - **Test cases:** `tests/<problem>.json`, the same kebab-case name as the folder — that name is the key the runners look up.
 - **Test files:** `<problem>.test.ts` for Vitest, `test_<problem>.py` (snake_case) for pytest, which requires that prefix to collect them.
-- **Java classes:** PascalCase, matching the file name in spirit (`reverse-linked-list.java` → `class ReverseLinkedList`), and **not** declared `public`. Java requires a *public* class to sit in a file named exactly after it, which a kebab-case file name cannot satisfy — the language server reports `class X is public, should be declared in a file named X.java`. Dropping `public` makes the class package-private, which is legal, silences the error, and changes nothing about how `java <file>.java` runs it. `main` itself still has to be `public static void`.
+- **Java classes:** PascalCase, matching the file name in spirit (`merge-sort.java` → `class MergeSort`), and **not** declared `public`. Java requires a *public* class to sit in a file named exactly after it, which a kebab-case file name cannot satisfy — the language server reports `class X is public, should be declared in a file named X.java`. Dropping `public` makes the class package-private, which is legal, silences the error, and changes nothing about how `java <file>.java` runs it. `main` itself still has to be `public static void`.
 - **Functions/variables:** idiomatic per language — `camelCase` in Java/TypeScript/C++, `snake_case` in Python.
 
 ## Running & Debugging Each Language
@@ -152,14 +118,14 @@ Every language reads the **same** test cases, from one JSON file per problem in 
 
 ```jsonc
 {
-  "problem": "two-sum-sorted",
-  "signature": "twoSumSorted(nums: int[] (ascending), target: int) -> [int, int]",
+  "problem": "<problem>",
+  "signature": "solve(nums: int[], target: int) -> int",
   "notes": "How to read a case: what each element of `input` is, and how non-primitive arguments are encoded.",
   "cases": [
-    { "name": "pair in the middle", "input": [[1, 2, 3, 4, 6], 6], "expected": [1, 3] }
+    { "name": "typical input", "input": [[1, 2, 3], 4], "expected": 7 }
   ],
   "edgeCases": [
-    { "name": "empty array", "input": [[], 5], "expected": [-1, -1] }
+    { "name": "empty array", "input": [[], 5], "expected": 0 }
   ]
 }
 ```
@@ -179,11 +145,11 @@ Numbers are compared exactly when both sides are integers, and with a relative t
 #include "test.hpp"
 
 int main() {
-    dsa::runJsonCases("two-sum-sorted", [](const dsa::Json& in) {
-        return twoSumSorted(in[0].ints(), (int)in[1].asInt());
+    dsa::runJsonCases("<problem>", [](const dsa::Json& in) {
+        return solve(in[0].ints(), (int)in[1].asInt());
     });
 
-    dsa::assertEqual(twoSumSorted({1, 2}, 3), std::vector<int>{0, 1}, "one-off case");
+    dsa::assertEqual(solve({1, 2}, 3), 2, "one-off case");
 
     return dsa::runTests();   // prints the summary, returns 1 if anything failed
 }
@@ -196,8 +162,8 @@ Read arguments off the `Json` input with `.ints()`, `.longs()`, `.doubles()`, `.
 ```python
 from dsatest import assert_equal, run_json_cases, run_tests
 
-run_json_cases("two-sum-sorted", two_sum_sorted)   # each case's input is splatted into the call
-assert_equal(two_sum_sorted([1, 2], 3), [0, 1], "one-off case")
+run_json_cases("<problem>", solve)   # each case's input is splatted into the call
+assert_equal(solve([1, 2], 3), 2, "one-off case")
 raise SystemExit(run_tests())
 ```
 
@@ -208,14 +174,14 @@ Results are normalised through JSON before comparison, so returning a tuple and 
 ```python
 from dsatest import load_cases, load_solution
 
-solution = load_solution(Path(__file__).parent / "two-sum-sorted.py")
+solution = load_solution(Path(__file__).parent / "<problem>.py")
 
-@pytest.mark.parametrize("case", load_cases("two-sum-sorted"), ids=lambda case: case.name)
-def test_two_sum_sorted(case):
-    assert list(solution.two_sum_sorted(*case.input)) == case.expected
+@pytest.mark.parametrize("case", load_cases("<problem>"), ids=lambda case: case.name)
+def test_solve(case):
+    assert solution.solve(*case.input) == case.expected
 ```
 
-`two-pointers/two-sum-sorted/test_two_sum_sorted.py` is a working example. The in-file runner is the default because it needs no install and stops on your breakpoints; pytest is there if you want its reporting.
+The in-file runner is the default because it needs no install and stops on your breakpoints; pytest is there if you want its reporting.
 
 ### Java
 
@@ -224,10 +190,10 @@ No JUnit, no jars to download — `TestRunner` and `Json` are two plain files in
 ```java
 import dsa.TestRunner;
 
-TestRunner.runJsonCases("two-sum-sorted",
-        in -> twoSumSorted(in.get(0).ints(), in.get(1).asInt()));
+TestRunner.runJsonCases("<problem>",
+        in -> solve(in.get(0).ints(), in.get(1).asInt()));
 
-TestRunner.assertEqual(twoSumSorted(new int[] {1, 2}, 3), new int[] {0, 1}, "one-off case");
+TestRunner.assertEqual(solve(new int[] {1, 2}, 3), 2, "one-off case");
 
 TestRunner.runTests();
 ```
@@ -259,7 +225,7 @@ A squiggle that survives all of that may just be a stale decoration — closing 
 ```bash
 npm install          # once
 npx vitest run       # everything
-npx vitest run two-sum-sorted    # one problem
+npx vitest run <problem>         # one problem
 npx vitest           # watch mode
 ```
 
@@ -268,13 +234,13 @@ A test file sits next to the solution and turns each JSON case into an `it(...)`
 ```ts
 import { describe, expect, it } from "vitest";
 import { loadCases } from "../../harness/ts/dsatest";
-import { twoSumSorted } from "./two-sum-sorted";
+import { solve } from "./<problem>";
 
-describe("two-sum-sorted", () => {
-  for (const testCase of loadCases("two-sum-sorted")) {
+describe("<problem>", () => {
+  for (const testCase of loadCases("<problem>")) {
     it(testCase.name, () => {
       const [nums, target] = testCase.input as [number[], number];
-      expect(twoSumSorted(nums, target)).toEqual(testCase.expected);
+      expect(solve(nums, target)).toEqual(testCase.expected);
     });
   }
 });
@@ -287,10 +253,8 @@ For this to work the solution must `export` its function and guard its demo, so 
 1. Create `tests/<problem>.json` from `templates/tests.json` — the file name must match the problem folder name, since that is what the runners look up.
 2. Put ordinary inputs in `cases`, and the ones that break naive solutions in `edgeCases`: empty input, one element, all-equal, negatives, zero, the "no answer" case, values that overflow a 32-bit int.
 3. Give each case a `name`. It is what the runner prints, so make it say what is being tested.
-4. Encode non-primitive arguments as plain data and describe the encoding in `notes` — a linked list as an array of values, a tree as an index-addressed level-order array (children of `i` at `2i+1`/`2i+2`), a graph as an adjacency list indexed by node id. The existing files under `tests/` follow those conventions.
+4. Encode non-primitive arguments as plain data and describe the encoding in `notes` — a linked list as an array of values, a tree as an index-addressed level-order array (children of `i` at `2i+1`/`2i+2`), a graph as an adjacency list indexed by node id.
 5. Keep values inside the safe range for every language you use: 64-bit for C++/Java, and `2^53` for TypeScript's `number`. Python does not care, which is exactly why it will not warn you.
-
-The starter cases that ship with this workspace were AI-generated, and a few of them deliberately fail against the AI-written example solutions (`activity-selection` with no activities, for instance). That is not a bug — the examples exist to prove the toolchain works, not to be correct solutions.
 
 ## Problem Overviews
 
@@ -305,7 +269,7 @@ Every problem folder gets a `problem-overview.md`, copied from `templates/proble
 - **Thought process** — the wrong turn you took first, the observation that unlocked it, what you got wrong.
 - **Links** — LeetCode / GeeksforGeeks / wherever the problem came from.
 
-The Summary and Thought Process sections are the ones that pay off; everything else can be reconstructed from the code. The eleven existing overviews were AI-generated as examples of the format — overwrite them with your own reasoning as you re-solve those problems.
+The Summary and Thought Process sections are the ones that pay off; everything else can be reconstructed from the code.
 
 ## Adding a New Language
 
