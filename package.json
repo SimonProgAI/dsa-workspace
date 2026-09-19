@@ -5,10 +5,13 @@
   "description": "Tooling for the TypeScript side of the DSA workspace: tsx to run a file, Vitest to test one.",
   "scripts": {
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@types/node": "^22.20.3",
     "tsx": "^4.23.13",
+    "typescript": "^7.0.2",
     "vitest": "^5.0.0"
   }
 }
