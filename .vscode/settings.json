@@ -13,6 +13,10 @@
   "python.analysis.extraPaths": [
     "harness/python"
   ],
+  // ts-node can't load TypeScript 7 (the native port has no JS API), so run .ts files with the local tsx.
+  "code-runner.executorMap": {
+    "typescript": "npx tsx"
+  },
   "files.exclude": {
     "**/harness/java/out": true
   },
