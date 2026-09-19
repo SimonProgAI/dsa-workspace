@@ -6,7 +6,7 @@ describe("remove-occurrences-of-element", () => {
   for (const testCase of loadCases("remove-occurrences-of-element")) {// Where are these cases loaded from?
     it(testCase.name, () => {
       const [nums, target] = testCase.input as [number[], number];
-      expect(removeOccurrencesOfElement(nums, target)).toEqual(testCase.expected);
+      expect(removeOccurrencesOfElement(nums, target, true)).toEqual(testCase.expected);
     });
   }
 });
