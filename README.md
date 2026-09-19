@@ -15,6 +15,8 @@ AI (Claude) was used to bootstrap this workspace — specifically to:
 
 **AI may be used to generate test cases, but never to implement solutions or write the logic of the tests themselves.** Filling in a `tests/<problem>.json` with inputs and expected outputs is data entry and fair game. Deciding *how* a solution works, and writing the code that checks it, is not.
 
+**AI may also be used as a sounding board for naming conventions, and to carry out the resulting rename.** Arguing over whether a returned array should be called `result`, `arr` or `resultArr` is a discussion about readability, and applying the winner across a file is a glorified find-and-replace — I make the call, the AI does the typing. Neither step decides what the code does. The algorithm and its logic stay 100% human-written.
+
 ## Purpose
 
 Solve problems in whichever languages you feel like, without setting up a build system per problem. Every file is standalone: open it, hit run or debug, done.
@@ -37,20 +39,23 @@ dsa-workspace/
     java/dsa/Json.java        # minimal JSON reader used by TestRunner
     ts/dsatest.ts       #   loadCases for Vitest, plus a standalone tsx runner
   tests/                # shared test cases, one JSON file per problem
-    <problem>.json
+    remove-occurrences-of-element.json
   templates/            # copy these when starting a new problem
     problem-overview.md
     tests.json
     solution.{cpp,py,java,ts}
     solution.test.ts
-  <category>/           # one folder per category, created as problems get solved
-    <problem>/
+  two-pointers/         # one folder per category, created as problems get solved
+    remove-occurrences-of-element/
       problem-overview.md    # what the problem is, and how I thought about it
-      <problem>.ts           # one file per language the problem was solved in
+      remove-occurrences-of-element.ts
+      use-case/              # the algorithm applied to a realistic scenario
+        rts-unit-selection.ts
   sandbox/              # experiments, benchmarks, anything that isn't a DSA problem
     README.md
   conftest.py           # lets pytest find the Python harness with no setup
   package.json          # tsx + vitest for the TypeScript side (npm install once)
+  tsconfig.json         # editor type-checking only; nothing is emitted
   vitest.config.ts
 ```
 
@@ -106,7 +111,8 @@ Open the file you want to run, then either press **F5** to debug (pick the match
 
 ### TypeScript
 - **Requires:** Node.js on your `PATH`, plus one `npm install` in the workspace root for Vitest (`npx tsx` alone works without it, fetching [`tsx`](https://github.com/privatenumber/tsx) on demand).
-- **Run task:** `Run TypeScript Active File` — runs `npx tsx ${file}`, no `tsconfig.json` or compile step required.
+- **Run task:** `Run TypeScript Active File` — runs `npx tsx ${file}`, no compile step required. The `tsconfig.json` exists purely so the editor resolves `node:*` imports and type-checks as you write; `tsx` and Vitest strip types without consulting it.
+- **Type-check:** `npm run typecheck` — the same check the editor runs, across the whole workspace.
 - **Debug:** `TypeScript: Debug Active File` — launches the same way under the Node debugger, with source maps handled by `tsx`.
 - **Tests:** a separate `<problem>.test.ts` file run by Vitest — `Test TypeScript Active File`, `Test TypeScript (All)`, or `Vitest: Debug Active Test File`.
 
