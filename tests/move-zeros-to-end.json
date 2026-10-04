@@ -1,0 +1,79 @@
+{
+  "problem": "move-zeros-to-end",
+  "signature": "moveTargetsToEnd(targetValue: number, nums: number[]) -> number[], the same values with every non-target element first, in original relative order, followed by every occurrence of targetValue",
+  "notes": "Each input is [targetValue, nums], in the same order as the function's parameters, so the function can be passed to the harness directly. The problem is stated for zeros, but every approach takes the target as a parameter, so some cases use a non-zero target. `expected` is the whole array: unlike remove-occurrences-of-element, the tail is part of the answer and must hold exactly the moved targets. The inputs mirror remove-occurrences-of-element.json (expected here is its prefix followed by n - k copies of the target), plus the GeeksforGeeks examples. The two-pass and one-pass approaches mutate their argument and the naive one returns a new array, so assert the return value and pass a fresh copy of the input to each call.",
+  "cases": [
+    {
+      "name": "GfG example: three zeros scattered",
+      "input": [0, [1, 2, 0, 4, 3, 0, 5, 0]],
+      "expected": [1, 2, 4, 3, 5, 0, 0, 0]
+    },
+    {
+      "name": "GfG example: no zeros, array unchanged",
+      "input": [0, [10, 20, 30]],
+      "expected": [10, 20, 30]
+    },
+    {
+      "name": "GfG example: all zeros",
+      "input": [0, [0, 0]],
+      "expected": [0, 0]
+    },
+    {
+      "name": "scattered occurrences",
+      "input": [0, [0, 1, 3, 0, 2, 2, 4, 2]],
+      "expected": [1, 3, 2, 2, 4, 2, 0, 0]
+    },
+    {
+      "name": "targets already at the end",
+      "input": [0, [1, 2, 0, 0]],
+      "expected": [1, 2, 0, 0]
+    },
+    {
+      "name": "run of a non-zero target in the middle",
+      "input": [4, [0, 0, 2, 3, 4, 4, 4, 4, 5, 5, 6]],
+      "expected": [0, 0, 2, 3, 5, 5, 6, 4, 4, 4, 4]
+    },
+    {
+      "name": "target absent, array unchanged",
+      "input": [5, [1, 2, 3, 4]],
+      "expected": [1, 2, 3, 4]
+    },
+    {
+      "name": "every element matches",
+      "input": [7, [7, 7, 7, 7]],
+      "expected": [7, 7, 7, 7]
+    },
+    {
+      "name": "runs at both ends",
+      "input": [2, [2, 2, 1, 5, 2, 2]],
+      "expected": [1, 5, 2, 2, 2, 2]
+    }
+  ],
+  "edgeCases": [
+    {
+      "name": "empty input",
+      "input": [0, []],
+      "expected": []
+    },
+    {
+      "name": "single element equal to target",
+      "input": [4, [4]],
+      "expected": [4]
+    },
+    {
+      "name": "single element not equal to target",
+      "input": [9, [4]],
+      "expected": [4]
+    },
+    {
+      "name": "negatives and zero, moving zero",
+      "input": [0, [-3, 0, -3, 4, 0]],
+      "expected": [-3, -3, 4, 0, 0]
+    },
+    {
+      "name": "values beyond 32-bit int range",
+      "input": [2147483648, [2147483648, 5, 2147483648]],
+      "expected": [5, 2147483648, 2147483648]
+    }
+  ]
+}

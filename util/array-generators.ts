@@ -54,14 +54,14 @@ export function generateRandomIntArray({
     return returnArr;
   }
 }
-console.log(
+/* console.log(
   generateRandomIntArray({
     len: 100,
     minValue: 1,
     maxValue: 200,
     sort: "ascending",
   }),
-);
+); */
 
 // TODO: Array of integers with consistent, extre-range gaps 
 // TODO: Array of strings generator
