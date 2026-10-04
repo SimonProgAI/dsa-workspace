@@ -3,8 +3,8 @@ const element: number = 0;
 // expected output: 6
 
 export function removeOccurrencesOfElement(
-  intArr: number[],
   ele: number,
+  intArr: number[],
   isSlicedArr: boolean = false,
 ) {
   let k: number = 0;
@@ -30,4 +30,4 @@ export function removeOccurrencesOfElement(
 }
 
 
-removeOccurrencesOfElement(caseArr, element); 
+removeOccurrencesOfElement(element,caseArr ); 
