@@ -29,13 +29,13 @@ export function averageRuntimeMs(
   for (let i = 0; i < runtimesArr.length; i++) {
     runtimesSum += runtimesArr[i];
   }
-
   const avgTime = runtimesSum / runtimesArr.length;
+
   console.log(
     `${label} ran on arrays of length ${dataSetLen} in an average of ${avgTime} ms over ${runs} runs.`,
   );
   return avgTime;
 }
 
-// TODO: create a parent function that compares two microBenchmarlAveragingMs and returns ratio,
+// TODO: create a parent function that compares two averageRuntimeMs and returns ratio,
 // speed increase or decrease, rank multiple algorithms according to speed, etc.
