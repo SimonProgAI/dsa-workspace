@@ -1,38 +1,38 @@
 import { performance } from "node:perf_hooks";
 
-export function microBenchmarkAveragingMs(
+// Logs and returns the average time in ms a given algorithm takes to execute over a given number of runs.
+// Generates a fresh data set for each execution of the algorithm.
+export function averageRuntimeMs(
   label: string,
-  dataSetLen: number,
+  runs: number,
   generateDataSet: () => number[],
-  runAlgorithm: (dataArr: number[]) => unknown,
+  runAlgorithm: (dataSet: number[]) => unknown,
 ): number {
-  let nums: number[] = new Array();
+  const runtimesArr: number[] = new Array();
 
+  // Captures the length of the data set (used only for the console.log before the return statement)
   const data = generateDataSet();
-  const dataLen = data.length;
+  const dataSetLen = data.length;
 
-  for (let i = 0; i < dataSetLen; i++) {
-    const dataArr = generateDataSet();
+  for (let i = 0; i < runs; i++) {
+    const dataSet = generateDataSet();
 
     const startTime = performance.now();
-    runAlgorithm(dataArr);
+    runAlgorithm(dataSet);
     const endTime = performance.now();
     const elapsedTime = endTime - startTime;
 
-    // console.log(nums)
-    nums[i] = elapsedTime;
+    runtimesArr[i] = elapsedTime;
   }
 
-  // console.log(nums);
-
-  let tempSum: number = 0;
-  for (let i = 0; i < nums.length; i++) {
-    tempSum += nums[i];
+  let runtimesSum = 0;
+  for (let i = 0; i < runtimesArr.length; i++) {
+    runtimesSum += runtimesArr[i];
   }
-  //   console.log("tempSum: ", tempSum);
-  const avgTime: number = tempSum / nums.length;
+
+  const avgTime = runtimesSum / runtimesArr.length;
   console.log(
-    `${label} ran on arrays of length ${dataLen} in an average of ${avgTime} ms over ${dataSetLen} runs.`,
+    `${label} ran on arrays of length ${dataSetLen} in an average of ${avgTime} ms over ${runs} runs.`,
   );
   return avgTime;
 }

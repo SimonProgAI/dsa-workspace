@@ -4,20 +4,18 @@ import {
   moveTargetsToEndOnePass,
   moveTargetsToEndTwoPass,
 } from "./move-zeros-to-end";
-import { microBenchmarkAveragingMs } from "../../util/performance-benchmark";
-import { removeOccurrencesOfElement } from "../remove-occurrences-of-element/remove-occurrences-of-element";
+import { averageRuntimeMs } from "../../util/performance-benchmark";
 
 const runs = 100;
 const length = 1_000_000;
-const functionsArr = [
+const algorithmsArr = [
   moveTargetsToEndNaive,
   moveTargetsToEndOnePass,
   moveTargetsToEndTwoPass,
-  removeOccurrencesOfElement,
 ];
 
-const benchmarkSuite = functionsArr.map((fn) => {
-  microBenchmarkAveragingMs(
+const benchmarkSuite = algorithmsArr.map((fn) =>
+  averageRuntimeMs(
     fn.name,
     runs,
     () =>
@@ -28,7 +26,7 @@ const benchmarkSuite = functionsArr.map((fn) => {
         sort: "none",
       }),
     (arr) => fn(0, arr),
-  );
-});
+  ),
+);
 
 console.log(benchmarkSuite);
