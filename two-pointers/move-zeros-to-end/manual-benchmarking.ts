@@ -6,7 +6,7 @@ import {
 } from "./move-zeros-to-end";
 import { averageRuntimeMs } from "../../util/performance-benchmark";
 
-const runs = 100;
+const runs = 1000;
 const length = 1_000_000;
 const algorithmsArr = [
   moveTargetsToEndNaive,
