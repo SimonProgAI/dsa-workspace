@@ -32,7 +32,7 @@ export function averageRuntimeMs(
   const avgTime = runtimesSum / runtimesArr.length;
 
   console.log(
-    `${label} ran on arrays of length ${dataSetLen} in an average of ${avgTime} ms over ${runs} runs.`,
+    `${label.padEnd(30)} avg ${avgTime.toFixed(3)}ms   n=${dataSetLen}   runs=${runs}`,
   );
   return avgTime;
 }
