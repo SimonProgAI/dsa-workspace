@@ -93,6 +93,6 @@ export function moveTargetsToEndOnePass(targetValue: number, nums: number[]) {
   return nums;
 }
 
-console.log(moveTargetsToEndNaive(testTarget, caseArr));
+// console.log(moveTargetsToEndNaive(testTarget, caseArr));
 // moveTargetsToEndTwoPass(testTarget, caseArr);
 // moveTargetsToEndOnePass(testTarget, caseArr);

@@ -27,9 +27,9 @@ Iterate over nums and move all values equal to targetValue (0) to the end of the
 
   | Approach | Average runtime | Data set length | Runs |
   | --- | --- | --- | --- |
-  | moveTargetsToEndNaive | 12.492 ms | 1,000,000 | 1000 |
-  | moveTargetsToEndOnePass | 2.658 ms | 1,000,000 | 1000 |
-  | moveTargetsToEndTwoPass | 1.186 ms | 1,000,000 | 1000 |
+  | moveTargetsToEndNaive | 14.639 ms | 1,000,000 | 1000 |
+  | moveTargetsToEndOnePass | 2.927 ms | 1,000,000 | 1000 |
+  | moveTargetsToEndTwoPass | 1.353 ms | 1,000,000 | 1000 |
 
   A likely reason: the one-pass approach does a three-assignment swap for every non-zero element, while the two-pass approach does a single write per non-zero element, followed by a cheap fill of the remaining positions.
 
