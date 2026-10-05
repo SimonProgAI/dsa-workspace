@@ -1,4 +1,4 @@
-# <Remove All Occurrences of an Element in an Array>
+# Remove All Occurrences of an Element in an Array
 
 ## Summary
 
