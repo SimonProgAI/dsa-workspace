@@ -13,9 +13,9 @@
   "python.analysis.extraPaths": [
     "harness/python"
   ],
-  // ts-node can't load TypeScript 7 (the native port has no JS API), so run .ts files with the local tsx.
   "code-runner.executorMap": {
-    "typescript": "npx tsx"
+    "typescript": "npx tsx",
+    "cpp": "cd $workspaceRoot && g++ -g -std=c++20 -fmodules-ts -Iharness/cpp -x c++ util/vector_utils.cppm -x none $fullFileName -o $dir$fileNameWithoutExt.exe && cd $dir && $dir$fileNameWithoutExt.exe"
   },
   "files.exclude": {
     "**/harness/java/out": true
@@ -24,7 +24,7 @@
   "C_Cpp_Runner.cppCompilerPath": "g++",
   "C_Cpp_Runner.debuggerPath": "gdb",
   "C_Cpp_Runner.cStandard": "",
-  "C_Cpp_Runner.cppStandard": "",
+  "C_Cpp_Runner.cppStandard": "c++20",
   "C_Cpp_Runner.msvcBatchPath": "C:/Program Files/Microsoft Visual Studio/VR_NR/Community/VC/Auxiliary/Build/vcvarsall.bat",
   "C_Cpp_Runner.useMsvc": false,
   "C_Cpp_Runner.warnings": [

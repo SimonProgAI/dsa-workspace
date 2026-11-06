@@ -2,6 +2,7 @@
 *.exe
 *.class
 *.o
+gcm.cache/
 harness/java/out/
 harness/java/dsa-harness.jar
 
