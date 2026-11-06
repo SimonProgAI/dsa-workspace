@@ -7,18 +7,24 @@
       "command": "g++",
       "args": [
         "-g",
-        "-std=c++17",
+        "-std=c++20",
+        "-fmodules-ts",
         "-I${workspaceFolder}/harness/cpp",
+        "-x",
+        "c++",
+        "util/vector_utils.cppm",
+        "-x",
+        "none",
         "${file}",
         "-o",
         "${fileDirname}/${fileBasenameNoExtension}.exe"
       ],
       "options": {
-        "cwd": "${fileDirname}"
+        "cwd": "${workspaceFolder}"
       },
       "group": "build",
       "problemMatcher": ["$gcc"],
-      "detail": "Compiles the currently open .cpp file with g++, next to the source file. harness/cpp is on the include path, so #include \"test.hpp\" works."
+      "detail": "Compiles the currently open .cpp file with g++ into an .exe next to the source file. harness/cpp is on the include path, so #include \"test.hpp\" works. util/vector_utils.cppm is compiled first so `import vector_utils;` works; it runs from the workspace root so the module cache lands in one gcm.cache/ there. Put #include lines before import lines (GCC bug)."
     },
     {
       "label": "Run C++ Active File",
